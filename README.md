@@ -1,1 +1,3 @@
-# cyyang_service
+# Flask API Server
+
+Serve project data for visualization
