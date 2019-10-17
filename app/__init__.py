@@ -28,10 +28,9 @@ def server_error(error):
 
 ############################### Page Managements ##############################
 # Homepage
-# @app.route("/")
+@app.route("/")
 def home():
-    return render_template('home.html')
-app.add_url_rule('/', view_func=home)
+    return """<h1>Hello There! I'm from Flask and for cyyang.me!<h1>"""
 
 # API for ridgeline chart
 from app.food_reviews import getRidgelineData
