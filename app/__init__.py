@@ -34,5 +34,7 @@ def home():
 
 # API for ridgeline chart
 from app.food_reviews import getRidgelineData
+from app.food_reviews import getStackedAreaData
+
 
 

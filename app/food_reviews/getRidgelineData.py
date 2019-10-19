@@ -8,11 +8,11 @@ dataset = './app/static/data/merged_amz-off_3.csv.gz'
 
 # api path
 @app.route('/api/dRidgeline') # served at /api/dRidgeline
-def export_data():
+def exportRidgeline():
     start_date = request.args.get('start_date', '')
     end_date = request.args.get('end_date', '')
 
-    return getData_Ridgeline(start_date, end_date)
+    return getRidgeline(start_date, end_date)
 
 # Load Data
 df = pd.read_csv(dataset, dtype={'customer_id': 'object',
@@ -35,7 +35,7 @@ sub = df[(df.energy_100g.notna()) & (df.energy_100g < 3000) &
         .reset_index(drop=True)
 
 # Process data for exporting, given start and end date
-def getData_Ridgeline(start_date, end_date, sub=sub):
+def getRidgeline(start_date, end_date, sub=sub):
     sub = sub[(sub.review_date > start_date) & (sub.review_date < end_date)]
 
     threshold = sub.groupby('category')[['id']].count()\
