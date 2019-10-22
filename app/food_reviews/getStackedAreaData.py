@@ -8,13 +8,13 @@ from pandas.tseries.offsets import MonthEnd
 dataset = './app/static/data/merged_amz-off_3.csv.gz'
 
 # api path
-@app.route('/api/dStackedArea') # served at /api/dStackedArea
-def exportStackedArea():
-    start_date = request.args.get('start_date', '')
-    end_date = request.args.get('end_date', '')
+# @app.route('/api/dStackedArea') # served at /api/dStackedArea
+# def exportStackedArea():
+#     start_date = request.args.get('start_date', '')
+#     end_date = request.args.get('end_date', '')
 
-    # return getData_Ridgeline(start_date, end_date)
-    return getStackedArea(start_date, end_date)
+#     # return getData_Ridgeline(start_date, end_date)
+#     return getStackedArea(start_date, end_date)
 
 
 # Load Data

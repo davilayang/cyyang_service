@@ -1,40 +1,35 @@
 # __init__ of app module
-
-# Import flask and template operators
+import os
 from flask import Flask, request
+from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
+from pathlib import Path
 
 # Define WSGI object
 app = Flask(__name__)
 
+# Get Environment Variables
+env_path = Path('.') / '.env' # ./.env
+load_dotenv(verbose=True, dotenv_path=env_path)
+
 # Configurations
-app.config.from_object('config')
-    # calls config.py at top layer, get base_dir by app.config['BASE_DIR']
+app.config.from_object('config') # import from /config.py, get base_dir by app.config['BASE_DIR']
 
-# HTTP error handling
-# HTTP error handling
-@app.errorhandler(404)
-def not_found(error):
-    return """
-    <pre>{}</pre> Error, Page not fonund
-    """.format(error), 404
+# Development Setting
+# app.config.from_object(os.environ['APP_SETTINGS']) # add settings variable from current env
+app.config.from_object(os.getenv('APP_SETTINGS')) # add settings variable with load_dotenv
 
-@app.errorhandler(500)
-def server_error(error):
-    return """
-    An internal error occurred: <pre>{}</pre>
-    See logs for full stacktrace.
-    """.format(error), 500
+# Database Configurations
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']  # add URI variable from current env
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')  # add URI variable from current env
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Define SQLAlchemy object
+db = SQLAlchemy(app)
 
 
-############################### Page Managements ##############################
-# Homepage
-@app.route("/")
-def home():
-    return """<h1>Hello There! I'm from Flask and for cyyang.me!<h1>"""
 
-# API for ridgeline chart
-from app.food_reviews import getRidgelineData
-from app.food_reviews import getStackedAreaData
+
 
 
 

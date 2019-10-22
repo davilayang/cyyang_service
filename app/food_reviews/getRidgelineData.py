@@ -7,12 +7,12 @@ import pandas as pd
 dataset = './app/static/data/merged_amz-off_3.csv.gz'
 
 # api path
-@app.route('/api/dRidgeline') # served at /api/dRidgeline
-def exportRidgeline():
-    start_date = request.args.get('start_date', '')
-    end_date = request.args.get('end_date', '')
+# @app.route('/api/dRidgeline') # served at /api/dRidgeline
+# def exportRidgeline():
+#     start_date = request.args.get('start_date', '')
+#     end_date = request.args.get('end_date', '')
 
-    return getRidgeline(start_date, end_date)
+#     return getRidgeline(start_date, end_date)
 
 # Load Data
 df = pd.read_csv(dataset, dtype={'customer_id': 'object',
