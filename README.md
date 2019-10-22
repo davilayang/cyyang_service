@@ -39,3 +39,10 @@
   + conda install -c anaconda psycopg2
   + conda install -c conda-forge python-dotenv
   
+
+INSERT INTO coursework (category, coursename)
+VALUES 
+    ('Computer Science', 'CS909 Data Mining Test'),
+    ('Computer Science', 'IM921 Visualization'),
+    ('Behavioral Science', 'PS922 Issues in Psychological Science Test'),
+    ('Cousera.com', 'Data Structures Test');

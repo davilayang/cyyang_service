@@ -1,0 +1,170 @@
+{
+    "name": "Skill Tree",
+    "img": "name-tag.gif",
+    "size": 1000,
+    "children": [
+        {
+            "name": "Front End Development",
+            "img": "",
+            "size": 1000,
+            "children": [
+                {
+                    "name": "JavaScript",
+                    "img": "logo_JS.png",
+                    "size": 1000,
+                    "children": [
+                        {
+                            "name": "React.js",
+                            "img": "logo_React.png",
+                            "size": 1000,
+                            "children": [
+                                {
+                                    "name": "Material UI",
+                                    "img": "logo_Mui.png",
+                                    "size": 1000
+                                }
+                            ]
+                        },
+                        {
+                            "name": "D3.js",
+                            "img": "logo_D3.png",
+                            "size": 1000
+                        }
+                    ]
+                },
+                {
+                    "name": "HTML",
+                    "img": "logo_HTML.png",
+                    "size": 1000
+                },
+                {
+                    "name": "CSS",
+                    "img": "logo_CSS.png",
+                    "size": 1000
+                }
+            ]
+        },
+        {
+            "name": "Back End Development",
+            "img": "",
+            "size": 1000,
+            "children": [
+                {
+                    "name": "Google Cloud Platform",
+                    "img": "logo_GCP.png",
+                    "size": 1000
+                },
+                {
+                    "name": "Amazon Web Service",
+                    "img": "logo_AWS.png",
+                    "size": 1000
+                },
+                {
+                    "name": "Linux",
+                    "img": "logo_Linux.png",
+                    "size": 1000,
+                    "children": [
+                        {
+                            "name": "Nginx",
+                            "img": "logo_Nginx.png",
+                            "size": 1000
+                        },
+                        {
+                            "name": "Apache",
+                            "img": "logo_Apache.png",
+                            "size": 1000
+                        },
+                        {
+                            "name": "Flask",
+                            "img": "logo_Flask.png",
+                            "size": 1000
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Data Science",
+            "img": "",
+            "size": 10000,
+            "children": [
+                {
+                    "name": "Python",
+                    "img": "logo_Python.png",
+                    "size": 1000,
+                    "children": [
+                        {
+                            "name": "Pandas",
+                            "img": "logo_Pandas.png",
+                            "size": 1000
+                        },
+                        {
+                            "name": "Numpy",
+                            "img": "logo_Numpy.png",
+                            "size": 1000
+                        },
+                        {
+                            "name": "Jupyter Notebook",
+                            "img": "logo_Jupyter.png",
+                            "size": 1000
+                        },
+                        {
+                            "name": "Matplotlib",
+                            "img": "logo_Matplotlib.png",
+                            "size": 1000
+                        },
+                        {
+                            "name": "Dash",
+                            "img": "logo_dash.png",
+                            "size": 1000
+                        },
+                        {
+                            "name": "Scikit Learn",
+                            "img": "logo_Sklearn.png",
+                            "size": 1000
+                        },
+                        {
+                            "name": "Keras",
+                            "img": "logo_Keras.png",
+                            "size": 1000
+                        },
+                        {
+                            "name": "Tensoflow",
+                            "img": "logo_TF.png",
+                            "size": 1000
+                        }
+                    ]
+                },
+                {
+                    "name": "R",
+                    "img": "logo_R.png",
+                    "size": 1000,
+                    "children": [
+                        {
+                            "name": "Tidyverse",
+                            "img": "logo_tidyverse.png",
+                            "size": 1000,
+                            "children": [
+                                {
+                                    "name": "ggplot2",
+                                    "img": "logo-ggplot2.png",
+                                    "size": 1000
+                                },
+                                {
+                                    "name": "tidyr",
+                                    "img": "logo-tidyr.png",
+                                    "size": 1000
+                                },
+                                {
+                                    "name": "dplyr",
+                                    "img": "logo-dplyr.png",
+                                    "size": 1000
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
