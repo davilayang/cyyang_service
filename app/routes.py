@@ -39,12 +39,12 @@ def server_error(error):
 #     end_date = request.args.get('end_date', '')
 #     return getStackedArea(start_date, end_date)
 
-## Courseworks list
+# Fetch coursework list
 @app.route('/courseworks', methods=['GET'])
 def view_courseworks():
     tmp = {'Computer Science': [], 'Behavioural Science': [], 'Coursera.com': []}
     cs = db.engine.execute("SELECT * FROM coursework WHERE category = 'Computer Science';")
-    bs = db.engine.execute("SELECT * FROM coursework WHERE category = 'Behavioral Science';")
+    bs = db.engine.execute("SELECT * FROM coursework WHERE category = 'Behavioural Science';")
     cr = db.engine.execute("SELECT * FROM coursework WHERE category = 'Coursera.com';")
 
     for row in cs.fetchall(): tmp['Computer Science'].append(row.coursename) 
@@ -52,7 +52,7 @@ def view_courseworks():
     for row in cr: tmp['Coursera.com'].append(row.coursename) 
     return jsonify(tmp)
 
-# http://localhost:5001/addcoursework?category=Behavioural+Science&coursename=999177
+# Add a new course to list
 @app.route('/addcoursework', methods=['POST'])
 def add_coursework():
     cat = request.args.get("category")
@@ -66,7 +66,7 @@ def add_coursework():
     return jsonify({cat: name}), 200
 
 
-# Skill Tree data
+# Fetch Skill Tree data
 @app.route('/skilltree', methods=['GET']) 
 def skilltree():
     root = db.engine.execute(\
@@ -94,6 +94,26 @@ def skilltree():
             tree.append(node)
 
     return jsonify(tree) # result tree also at array[0]
+
+# Add a new skill to tree
+@app.route('/addskill', methods=['POST'])
+def add_skill():
+    parent = request.args.get("group")
+    name = request.args.get("skill")
+    
+    id = db.engine.execute("SELECT max(id) FROM skilltree").fetchone()[0] + 1
+    pid = db.engine.execute(\
+        "SELECT id FROM skilltree WHERE name='{}'".format(parent)\
+        ).fetchone()[0]
+    img = "logo_No-logo.png"
+    size = 1000
+
+    sql ="""
+        INSERT INTO skilltree (id, pid, name, img, size) 
+            VALUES('{0}', '{1}', '{2}', '{3}', '{4}')
+        """.format(id, pid, name, img, size)
+    result = db.engine.execute(sql)
+    return jsonify({parent: name}), 200
 
 
 # Declaring Flask WTF-Form

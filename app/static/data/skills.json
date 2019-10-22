@@ -147,17 +147,17 @@
                             "children": [
                                 {
                                     "name": "ggplot2",
-                                    "img": "logo-ggplot2.png",
+                                    "img": "logo_ggplot2.png",
                                     "size": 1000
                                 },
                                 {
                                     "name": "tidyr",
-                                    "img": "logo-tidyr.png",
+                                    "img": "logo_tidyr.png",
                                     "size": 1000
                                 },
                                 {
                                     "name": "dplyr",
-                                    "img": "logo-dplyr.png",
+                                    "img": "logo_dplyr.png",
                                     "size": 1000
                                 }
                             ]
