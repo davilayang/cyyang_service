@@ -2,7 +2,7 @@ from flask import request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 from app import app, db
-from app.models import Post, Coursework, SkillTree
+from app.models import Coursework, SkillTree
 
 from app.food_reviews.getRidgelineData import  getRidgeline
 from app.food_reviews.getStackedAreaData import getStackedArea
