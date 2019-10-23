@@ -86,7 +86,7 @@
         {
             "name": "Data Science",
             "img": "",
-            "size": 10000,
+            "size": 1000,
             "children": [
                 {
                     "name": "Python",

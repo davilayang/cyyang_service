@@ -1,11 +1,11 @@
 from flask import request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
-from app.food_reviews.getRidgelineData import  getRidgeline
-from app.food_reviews.getStackedAreaData import getStackedArea
-
 from app import app, db
 from app.models import Post, Coursework, SkillTree
+
+from app.food_reviews.getRidgelineData import  getRidgeline
+from app.food_reviews.getStackedAreaData import getStackedArea
 
 # Page Managements
 ## Homepage 
@@ -94,12 +94,15 @@ def skilltree():
 # Add a new skill to tree
 @app.route('/addskill', methods=['POST'])
 def add_skill():
-    parent = request.args.get("group")
-    name = request.args.get("skill")
-    
+    # request object has multiple attributes related to Payload
+    # args, form, files values, json
+    # use request.json() here, must be application/json content type
+    parent_skill = request.json.get("group")
+    name_skill = request.json.get("skill")
+
     id = db.engine.execute("SELECT max(id) FROM skilltree").fetchone()[0] + 1
     pid = db.engine.execute(\
-        "SELECT id FROM skilltree WHERE name='{}'".format(parent)\
+        "SELECT id FROM skilltree WHERE name='{}'".format(parent_skill)\
         ).fetchone()[0]
     img = "logo_No-logo.png"
     size = 1000
@@ -107,7 +110,7 @@ def add_skill():
     sql ="""
         INSERT INTO skilltree (id, pid, name, img, size) 
             VALUES('{0}', '{1}', '{2}', '{3}', '{4}')
-        """.format(id, pid, name, img, size)
+        """.format(id, pid, name_skill, img, size)
     result = db.engine.execute(sql)
-    return jsonify({parent: name}), 200
+    return jsonify({parent_skill: name_skill}), 200
 
