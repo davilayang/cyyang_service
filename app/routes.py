@@ -36,7 +36,7 @@ def exportStackedArea():
     return getStackedArea(start_date, end_date)
 
 # Fetch coursework list
-@app.route('/courseworks', methods=['GET'])
+@app.route('/api/courseworks', methods=['GET'])
 def view_courseworks():
     tmp = {'Computer Science': [], 'Behavioural Science': [], 'Coursera.com': []}
     cs = db.engine.execute("SELECT * FROM coursework WHERE category = 'Computer Science';")
@@ -49,7 +49,7 @@ def view_courseworks():
     return jsonify(tmp)
 
 # Add a new course to list
-@app.route('/addcoursework', methods=['POST'])
+@app.route('/api/addcoursework', methods=['POST'])
 def add_coursework():
     cat = request.args.get("category")
     name = request.args.get("coursename")
@@ -63,7 +63,7 @@ def add_coursework():
 
 
 # Fetch Skill Tree data
-@app.route('/skilltree', methods=['GET']) 
+@app.route('/api/skilltree', methods=['GET']) 
 def skilltree():
     root = db.engine.execute(\
         "SELECT * FROM skilltree WHERE pid IS NULL;"\
@@ -92,7 +92,7 @@ def skilltree():
     return jsonify(tree) # result tree also at array[0]
 
 # Add a new skill to tree
-@app.route('/addskill', methods=['POST'])
+@app.route('/api/addskill', methods=['POST'])
 def add_skill():
     # request object has multiple attributes related to Payload
     # args, form, files values, json
