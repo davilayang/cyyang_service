@@ -1,45 +1,29 @@
-from app import app
-from flask import request, url_for
-
+from app import app, db
 import pandas as pd
 from pandas.tseries.offsets import MonthEnd
 
-# dataset = url_for('static', filename='data/merged_amz-off_3.csv.gz')
-dataset = './app/static/data/merged_amz-off_3.csv.gz'
-
-# api path
-# @app.route('/api/dStackedArea') # served at /api/dStackedArea
-# def exportStackedArea():
-#     start_date = request.args.get('start_date', '')
-#     end_date = request.args.get('end_date', '')
-
-#     # return getData_Ridgeline(start_date, end_date)
-#     return getStackedArea(start_date, end_date)
-
-
-# Load Data
-df = pd.read_csv(dataset, dtype={'customer_id': 'object',
-                                 'product_parent': 'object', 
-                                 'star_rating': 'Int64', 
-                                 'helpful_votes':'Int64', 
-                                 'total_votes': 'Int64', 
-                                 'code': 'object'},
-                 compression='gzip')
-
-# Convert Review Date to Datetime Object
-df.review_date = pd.to_datetime(df.review_date)
-
-# Subset on DataFrame
-sub = df[(df.energy_100g.notna()) & (df.energy_100g < 3000) & 
-         (df.salt_100g < 100) & (df.review_date.notna()) & 
-         (df.main_category_en.notna()) & (df.main_category_en.str.contains('^[A-Z].*'))]\
-        .loc[:, ['main_category_en', 'review_date', 'review_id', 'star_rating']]\
-        .rename(mapper={'main_category_en': 'category', 'review_id': 'id'}, axis=1)\
-        .reset_index(drop=True)
-
-# Process data for exporting, given start and end date
-def getStackedArea(start_date='2014-01-01', end_date='2014-12-31', sub=sub):
-    sub = sub[(sub.review_date > start_date) & (sub.review_date < end_date)]
+def getStackedArea(start_date='2014-01-01', end_date='2014-12-31'):
+    query = \
+    """
+    SELECT 
+        main_category_en AS category, 
+        review_date, 
+        review_id AS id,
+        star_rating
+    FROM 
+        sample_table
+    WHERE 
+        energy_100g IS NOT NULL
+        AND review_date IS NOT NULL
+        AND main_category_en IS NOT NULL
+        AND energy_100g < 3000
+        AND salt_100g < 100
+        AND main_category_en SIMILAR TO '[A-Z]_*'
+        AND review_date BETWEEN '{0}' AND '{1}'
+    ORDER BY
+        review_date
+    """.format(start_date, end_date)
+    sub = pd.read_sql(query, con=db.engine)
 
     threshold = sub.groupby('category')[['id']].count()\
         .sort_values('id', ascending=False)\
