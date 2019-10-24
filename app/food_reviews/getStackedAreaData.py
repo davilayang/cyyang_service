@@ -11,7 +11,7 @@ def getStackedArea(start_date='2014-01-01', end_date='2014-12-31'):
         review_id AS id,
         star_rating
     FROM 
-        sample_table
+        food_reviews
     WHERE 
         energy_100g IS NOT NULL
         AND review_date IS NOT NULL

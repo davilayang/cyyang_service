@@ -2,6 +2,7 @@
 from app import db
 import json
 
+
 def init_coursework(): 
     # Coursework list, from json to postgres sql
     filePath ="./app/static/data/courseworks.json"
@@ -23,6 +24,7 @@ def init_coursework():
         .format('category', 'coursename', insertStrings[:-2])) 
         # string slicing by :-2 to remove comma at end of string
     return results.rowcount
+
 
 def init_skilltree(): 
     # Skills list, from json to postgres sql
@@ -61,6 +63,28 @@ def init_skilltree():
 
     return results.rowcount
 
+
+def init_foodReviews():
+    import pandas as pd
+    filePath ="./app/static/data/merged_amz-off_3.csv.gz"
+    dtypes = {
+        'customer_id': 'object', 'product_parent': 'object', \
+        'star_rating': pd.Int64Dtype(), 'helpful_votes': pd.Int64Dtype(), \
+        'total_votes': pd.Int64Dtype(), 'code': 'object'
+        },
+    df = pd.read_csv(filePath, compression='gzip')
+    df.review_date = pd.to_datetime(df.review_date)
+    # Insert dataframe to database, as food_reviews table
+    df.to_sql(\
+        name="food_reviews", if_exists='replace', schema='public', 
+        index=False, con=db.engine
+        )
+    # Alter review_id as primary key
+    db.engine.execute("ALTER TABLE food_reviews ADD PRIMARY KEY (review_id);")
+
+    return None
+
+
 if __name__ == '__main__':
     print('...init coursework table...')
     rowCount = init_coursework()
@@ -69,3 +93,7 @@ if __name__ == '__main__':
     print('...init skiltree table...')
     rowCount = init_skilltree()
     print('inserted {} rows'.format(rowCount))
+
+    print('...init food_reviews table...')
+    init_foodReviews()
+    print('DataFrame insertion done!')

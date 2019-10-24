@@ -10,7 +10,7 @@ def getRidgeline(start_date, end_date):
         review_date, 
         review_id AS id
     FROM 
-        sample_table
+        food_reviews
     WHERE 
         energy_100g IS NOT NULL
         AND review_date IS NOT NULL
