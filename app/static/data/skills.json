@@ -60,6 +60,16 @@
                     "size": 1000
                 },
                 {
+                    "name": "Flask",
+                    "img": "logo_Flask.png",
+                    "size": 1000
+                },
+                {
+                    "name": "PostgreSQL",
+                    "img": "logo_postgresql.png",
+                    "size": 1000
+                },
+                {
                     "name": "Linux",
                     "img": "logo_Linux.png",
                     "size": 1000,
@@ -72,11 +82,6 @@
                         {
                             "name": "Apache",
                             "img": "logo_Apache.png",
-                            "size": 1000
-                        },
-                        {
-                            "name": "Flask",
-                            "img": "logo_Flask.png",
                             "size": 1000
                         }
                     ]

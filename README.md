@@ -5,44 +5,51 @@
 
 ## HOW TO
 
-### run.py
+### `run.py`
 
 > start development server
 
 + `python run.py`
 
-### manange.py
+### `manange.py`
 
 > manage databse models/tables
 
 1. initialize migration
-    + `python manage.py db init`
     + `FLASK_APP=manage.py flask db init`
+    + `python manage.py db init` (if use `flask-script`)
 2. start migration
-    + `python manage.py db migrate`
     + `FLASK_APP=manage.py flask db migrate`
-3. upgrade to database
-    + `python manage.py db upgrade`
+    + `python manage.py db migrate` (if use `flask-script`)
+3. upgrade changes to database
     + `FLASK_APP=manage.py flask db upgrade`
+    + `python manage.py db upgrade` (if use `flask-script`)
 4. take step 2 and 3 if model changes
+
+## Packages
+
+> using Pip
+
++ `python==3.6.9`
++ (see `requirements.txt`)
+
+> using Conda
+
++ `python=3.6.9`
++ `conda install flask flask-sqlalchemy pandas`
++ `conda install -c conda-forge flask-migrate python-dotenv`
++ `conda install -c anaconda psycopg2`
+
++ Not Necessary:
+  + `conda install -c conda-forge flask-script`
 
 ## Notes
 
 + `git pull` to update local files on cloud server from origin
-+ `wsgi.py` should have `import app from app`, since app is initialized there
-  + `from app.routes import app`
-+ change .env settings accordingly
-+ conda install packages
-  + conda isntall flask-sqlalchemy
-  + conda install -c conda-forge flask-migrate
-  + conda install -c conda-forge flask-script
-  + conda install -c anaconda psycopg2
-  + conda install -c conda-forge python-dotenv
-  
-
-INSERT INTO coursework (category, coursename)
-VALUES 
-    ('Computer Science', 'CS909 Data Mining Test'),
-    ('Computer Science', 'IM921 Visualization'),
-    ('Behavioral Science', 'PS922 Issues in Psychological Science Test'),
-    ('Cousera.com', 'Data Structures Test');
+  + `git reset --hard` to ignore local changes
++ `wsgi.py`
+  + has `from app import app`, if no routes to wrap `app`
+  + has `from app.routes import app`, if `routes.py` in `app`
++ change `.env` variables accordingly
+  + `DATABASE_URL=` ?
+  + `APP_SETTINGS=` ?
