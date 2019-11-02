@@ -2,13 +2,18 @@ from flask import url_for
 import json
 import zipfile
 
-# Process data for exporting, given start and end date
-def getGenSents(firstWord='i'):
-    # filePath = url_for('static', filename='data/helpful_reviews.zip' )
-    filePath = 'app/static/data/helpful_reviews.zip'
+# filePath = url_for('static', filename='data/helpful_reviews.zip' )
+filePath = 'app/static/data/helpful_reviews.zip'
+with zipfile.ZipFile(filePath) as zfile:
+    data = json.loads(zfile.read('helpful_reviews.json').decode("utf-8"))
 
-    with zipfile.ZipFile(filePath) as zfile:
-        data = json.loads(zfile.read('helpful_reviews.json').decode("utf-8"))
+def getAvailableWords():
+    helpfulFirst =  list(data['helpful']['<s>']['<s>'].keys())
+    notHelpfulFirst =  list(data['notHelpful']['<s>']['<s>'].keys())
+
+    return {'helpful': helpfulFirst, 'notHelpful': notHelpfulFirst}
+
+def getGenSents(firstWord='i'):
 
     def recursion(sent, sents, trigrams):
         w1, w2 = sent[-2:]
@@ -23,7 +28,7 @@ def getGenSents(firstWord='i'):
         for word in trigrams[w1][w2].keys():
             sents = recursion(sent+[word], sents, trigrams)
         return sents
-    print(firstWord)
+
     helpfulSents = recursion(['<s>', '<s>', firstWord], [], data['helpful'])
     notHelpfulSents = recursion(['<s>', '<s>', firstWord], [], data['notHelpful'])
 

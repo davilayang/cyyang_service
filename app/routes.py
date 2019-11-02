@@ -6,8 +6,10 @@ from app.models import Coursework, SkillTree
 
 from app.food_reviews.getRidgelineData import  getRidgeline
 from app.food_reviews.getStackedAreaData import getStackedArea
-from app.food_reviews.getLollipopData import getLollipop
+# from app.food_reviews.getLollipopData import getLollipop
 from app.food_reviews.getGenSents import getGenSents
+from app.food_reviews.getGenSents import getAvailableWords
+
 
 # Page Managements
 ## Homepage 
@@ -30,9 +32,9 @@ def exportGenSents():
     return getGenSents(firstWord)
 
 ## Lollipop Chart
-@app.route('/api/dLollipop', methods=['GET']) 
-def exportLollipop():
-    return getLollipop()
+# @app.route('/api/dLollipop', methods=['GET']) 
+# def exportLollipop():
+#     return getLollipop()
 
 ## Ridgeline Chart
 @app.route('/api/dRidgeline', methods=['GET']) # served at /api/dRidgeline
