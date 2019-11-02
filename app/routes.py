@@ -6,6 +6,7 @@ from app.models import Coursework, SkillTree
 
 from app.food_reviews.getRidgelineData import  getRidgeline
 from app.food_reviews.getStackedAreaData import getStackedArea
+from app.food_reviews.getLollipopData import getLollipop
 
 # Page Managements
 ## Homepage 
@@ -20,6 +21,11 @@ def not_found(error):
 @app.errorhandler(500)
 def server_error(error):
     return """An internal error occurred: <pre>{}</pre> See logs for full stacktrace.""".format(error), 500
+
+## Lollipop Chart
+@app.route('/api/dLollipop', methods=['GET']) 
+def exportLollipop():
+    return getLollipop()
 
 ## Ridgeline Chart
 @app.route('/api/dRidgeline', methods=['GET']) # served at /api/dRidgeline
