@@ -7,6 +7,7 @@ from app.models import Coursework, SkillTree
 from app.food_reviews.getRidgelineData import  getRidgeline
 from app.food_reviews.getStackedAreaData import getStackedArea
 from app.food_reviews.getLollipopData import getLollipop
+from app.food_reviews.getGenSents import getGenSents
 
 # Page Managements
 ## Homepage 
@@ -21,6 +22,12 @@ def not_found(error):
 @app.errorhandler(500)
 def server_error(error):
     return """An internal error occurred: <pre>{}</pre> See logs for full stacktrace.""".format(error), 500
+
+## Trigrams Sentence Generation
+@app.route('/api/dSentGen', methods=['GET']) 
+def exportGenSents():
+    firstWord = request.args.get('first_word', '')
+    return getGenSents(firstWord)
 
 ## Lollipop Chart
 @app.route('/api/dLollipop', methods=['GET']) 
