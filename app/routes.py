@@ -7,8 +7,9 @@ from app.models import Coursework, SkillTree
 from app.food_reviews.getRidgelineData import  getRidgeline
 from app.food_reviews.getStackedAreaData import getStackedArea
 # from app.food_reviews.getLollipopData import getLollipop
-from app.food_reviews.getGenSents import getGenSents
-from app.food_reviews.getGenSents import getAvailableWords
+from app.food_reviews.getGenSentsData import getGenSents
+from app.food_reviews.getGenSentsData import getAvailableWords
+from app.food_reviews.getHeatMapData import getHeatMap
 
 
 # Page Managements
@@ -25,6 +26,14 @@ def not_found(error):
 def server_error(error):
     return """An internal error occurred: <pre>{}</pre> See logs for full stacktrace.""".format(error), 500
 
+## HeatMap Chart
+@app.route('/api/dHeatMap', methods=['GET']) 
+def exportHeatMap():
+    start_date = request.args.get('start_date', '')
+    end_date = request.args.get('end_date', '')
+    n_groups = request.args.get('n_groups', '')
+    return getHeatMap(start_date, end_date, int(n_groups))
+    
 ## Trigrams Sentence Generation
 @app.route('/api/dSentGen', methods=['GET']) 
 def exportGenSents():
