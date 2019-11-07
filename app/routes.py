@@ -31,8 +31,7 @@ def server_error(error):
 def exportHeatMap():
     start_date = request.args.get('start_date', '')
     end_date = request.args.get('end_date', '')
-    n_groups = request.args.get('n_groups', '')
-    return getHeatMap(start_date, end_date, int(n_groups))
+    return getHeatMap(start_date, end_date)
     
 ## Trigrams Sentence Generation
 @app.route('/api/dSentGen', methods=['GET']) 

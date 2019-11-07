@@ -2,7 +2,7 @@ from app import app, db
 import json
 import pandas as pd
 
-def getHeatMap(start_date, end_date, n_groups):
+def getHeatMap(start_date, end_date):
     query = \
     """
     SELECT 
