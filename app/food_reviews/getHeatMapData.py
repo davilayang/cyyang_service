@@ -19,24 +19,29 @@ def getHeatMap(start_date, end_date, n_groups):
     df = pd.read_sql(query, con=db.engine)\
         .assign(review_times=lambda d: d.groupby('customer_id')[['review_id']].transform('count'))
 
-    d1 = \
-    df.assign(group=lambda df: df.review_times.apply(lambda d: (n_groups) if d >= (n_groups) else d))\
-    .groupby([df.review_date.dt.weekday, 'group'])[['review_id']].count()\
-    .groupby(level=1).apply(lambda d: 100 * ( d / d.sum()))\
-    .rename(index=dict(zip(range(7), range(1, 8))), level=0)\
-    .reset_index()\
-    .rename(mapper={'review_id': 'percentage'}, axis=1)\
-    .astype({'group': 'category'})
+    d = {}
+    # data from 2 groups to 5 groups
+    for n_groups in range(2, 6): 
+        d1 = \
+        df.assign(group=lambda df: df.review_times.apply(lambda d: (n_groups) if d >= (n_groups) else d))\
+        .groupby([df.review_date.dt.weekday, 'group'])[['review_id']].count()\
+        .groupby(level=1).apply(lambda d: 100 * ( d / d.sum()))\
+        .rename(index=dict(zip(range(7), range(1, 8))), level=0)\
+        .reset_index()\
+        .rename(mapper={'review_id': 'percentage'}, axis=1)\
+        .astype({'group': 'category'})
 
-    d2 = \
-    df.assign(group=lambda df: df.review_times.apply(lambda d: (n_groups) if d >= (n_groups) else d))\
-    .groupby([df.review_date.dt.day, 'group'])[['review_id']].count()\
-    .groupby(level=1).apply(lambda d: 100 * ( d / d.sum()))\
-    .reset_index()\
-    .rename(mapper={'review_id': 'percentage'}, axis=1)\
-    .astype({'group': 'category'})
-
-    d = {'weekday': d1.to_dict(orient ='records'), 'monthday': d2.to_dict(orient ='records')}
+        d2 = \
+        df.assign(group=lambda df: df.review_times.apply(lambda d: (n_groups) if d >= (n_groups) else d))\
+        .groupby([df.review_date.dt.day, 'group'])[['review_id']].count()\
+        .groupby(level=1).apply(lambda d: 100 * ( d / d.sum()))\
+        .reset_index()\
+        .rename(mapper={'review_id': 'percentage'}, axis=1)\
+        .astype({'group': 'category'})
+        
+        # export data
+        d[n_groups] =  {'weekday': d1.to_dict(orient ='records'), 
+                        'monthday': d2.to_dict(orient ='records')}
     
     return json.dumps(d)
 
