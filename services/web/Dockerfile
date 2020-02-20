@@ -6,7 +6,8 @@ WORKDIR /usr/src
 #     && apk add postgresql-dev gcc python3-dev musl-dev
 # apk add gcc g++ make python3-dev
 
-RUN apk update
+RUN apk update && apk upgrade \
+    && apk add python3-dev gcc g++
 
 COPY ./requirements.txt .
 RUN pip install --upgrade pip
