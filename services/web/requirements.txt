@@ -2,5 +2,4 @@ flask==1.1.1
 flask-sqlalchemy==2.4.1
 flask-migrate==2.4.0
 python-dotenv==0.11.0
-numpy==1.18.1
-pandas==1.0.1
+
