@@ -1,16 +1,28 @@
+# Flask Dockerfile for container run
 FROM python:3.6.9-alpine
 
+# set working directory
 WORKDIR /usr/src
 
-# RUN apk update \
-#     && apk add postgresql-dev gcc python3-dev musl-dev
-# apk add gcc g++ make python3-dev
-
+# prepara for installations
 RUN apk update && apk upgrade \
     && apk add python3-dev gcc g++
 
-COPY ./requirements.txt .
-RUN pip install --upgrade pip
-# RUN pip install -r requirements.txt
+# set python not writing .pyc and not buffering tdout and stderr
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-COPY . . 
+# install python dependencies
+COPY ./requirements.txt ./requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# copy other files
+COPY . .
+
+# start flask development server
+CMD ["flask"]
+
+
+
+# https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
