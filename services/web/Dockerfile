@@ -9,8 +9,8 @@ RUN apk update && apk upgrade \
     && apk add --no-cache python3-dev gcc g++
 
 # set python not writing .pyc and not buffering tdout and stderr
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # install python dependencies, with docker cache to avoid incessary re-install
 COPY ./requirements.txt ./requirements.txt
@@ -21,13 +21,11 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # set flask env variables
-ENV FLASK_APP app.py
-ENV FLASK_RUN_HOST 0.0.0.0
-ENV FLASK_RUN_PORT 5001
+ENV FLASK_APP="./app/api.py"
+ENV FLASK_RUN_PORT=5001
 
 # start flask development server
-CMD ["flask", "run"]
-
+CMD ["flask", "run", "--host=0.0.0.0"]
 
 
 # https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
