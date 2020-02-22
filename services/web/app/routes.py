@@ -12,16 +12,6 @@ from app.api import app
 # from app.food_reviews.getGenSentsData import getAvailableWords
 # from app.food_reviews.getHeatMapData import getHeatMap
 
-@app.errorhandler(404)
-def not_found(error, methods=["GET"]):
-
-    """
-    page not found - returns 404
-
-    """
-    return Response(f"{error}", status=404)
-
-
 
 # ## HeatMap Chart
 # @app.route('/api/dHeatMap', methods=['GET']) 

@@ -36,12 +36,12 @@ def home() -> Response:
     )
 
 ## 404 error route
-# @app.errorhandler(404)
-# def not_found(error, methods=["GET"]):
+@app.errorhandler(404)
+def not_found(error, methods=["GET"]):
 
-#     """
-#     page not found - returns 404
+    """
+    page not found - returns 404
 
-#     """
-#     return Response(f"<pre>{error}</pre> Error, Page not fonund", status=404)
+    """
+    return Response(f"{error}", status=404)
 
