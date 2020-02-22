@@ -1,6 +1,6 @@
 # with config, only values in uppercases are actually stored
-import os
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+# import os
+# BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # base config class
 class Config(object):
@@ -9,7 +9,7 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'this-really-needs-to-be-changed'
     WTF_CSRF_SECRET_KEY="a csrf secret key"
-    SQLALCHEMY_DATABASE_URI = ""
+    SQLALCHEMY_DATABASE_URI = "postgresql://user:password@localhost:5432/testdb"
 
 class ProductionConfig(Config):
     DEBUG = False

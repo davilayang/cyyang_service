@@ -6,7 +6,7 @@ WORKDIR /usr/src
 
 # prepara for installations
 RUN apk update && apk upgrade \
-    && apk add --no-cache python3-dev gcc g++
+    && apk add --no-cache gcc g++ python3-dev postgresql-dev
 
 # set python not writing .pyc and not buffering tdout and stderr
 ENV PYTHONDONTWRITEBYTECODE=1

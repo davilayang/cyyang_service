@@ -1,4 +1,4 @@
-from app import app, db
+from app.api import app, db
 import pandas as pd
 from pandas.tseries.offsets import MonthEnd
 

@@ -1,4 +1,4 @@
-from app import app, db
+from app.api import app, db
 import pandas as pd
 
 # Process data for exporting, given start and end date

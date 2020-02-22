@@ -1,5 +1,6 @@
 # database models/tables
-from app import app, db
+
+from app.api import app, db
 
 # model for coursework list
 # id, category, courseName

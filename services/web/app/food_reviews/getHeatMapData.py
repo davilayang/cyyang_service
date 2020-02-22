@@ -1,4 +1,4 @@
-from app import app, db
+from app.api import app, db
 import json
 import pandas as pd
 
