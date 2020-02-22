@@ -29,9 +29,9 @@ def export_data_food_review_heatmap():
 
     """
 
-    start_date = request.args.get('start_date', '123')
+    start_date = request.args.get('start_date', '')
 
-    end_date = request.args.get('end_date', '456')
+    end_date = request.args.get('end_date', '')
 
     return getHeatMap(start_date, end_date)
     
