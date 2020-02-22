@@ -14,8 +14,6 @@ app = Flask(__name__)
 # route imports
 from app.routes import app
 
-
-
 # route handlers
 ## homepage route
 @app.route("/", methods=["GET"])

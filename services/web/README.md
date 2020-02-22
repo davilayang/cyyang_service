@@ -33,8 +33,13 @@
 ### app, as the main module
 
 + `__init__.py`
+  + ...
 + `api.py`
-+ 
+  + basic routes and app
++ `routes.py`
+  + chart routes
++ `food_reviews`
+  + food reviews project data
 
 ### `tests`
 

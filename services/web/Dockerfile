@@ -12,7 +12,8 @@ RUN apk update && apk upgrade \
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# install python dependencies, with docker cache to avoid incessary re-install
+# install python dependencies,
+# with docker cache to avoid incessary re-install
 COPY ./requirements.txt ./requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
