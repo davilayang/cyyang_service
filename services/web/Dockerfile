@@ -24,6 +24,7 @@ COPY . .
 # set flask env variables
 ENV FLASK_APP="./app/api.py"
 ENV FLASK_RUN_PORT=5001
+# ENV SQLALCHEMY_TRACK_MODIFICATIONS=False
 
 # start flask development server
 CMD ["flask", "run", "--host=0.0.0.0"]
