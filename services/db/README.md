@@ -40,6 +40,32 @@
     + `postgresql://user:password@psqldb:5432/testdb`
     + `postgresql://postgres:password@psqldb:5432/postgres`
 
+> copy data from unammed volume to named volume
+
+1. access the MobyLinux VM’s file system
+```bash
+# Run this from your regular terminal on Windows / MacOS:
+docker container run --rm -it -v /:/host alpine
+
+# Once you're in the container that we just ran, run this:
+chroot /host
+
+# Go to volumes
+cd /var/lib/docker/volumes
+ls -al  # psql-data and <unnamed-volume>
+```
+
+2. copy from unamed to named volume
+    + `cp -r <unnamed-volume>/* psql-data/*`
+
+3. start container with volume
+    + `docker container run --name some-psql --rm -p 5432:5432 -v psql-data:/var/lib/postgresql/data cyyang-db`
+    + `docker exec -it some-psql /bin/ash`
+      + `psql -U user testdb`
+
+
+
+
 ## References
 
 + https://docs.docker.com/storage/volumes/

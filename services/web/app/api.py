@@ -11,7 +11,9 @@ from flask import Flask, Response
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
 app.config.from_object("app.config.Config")
+# app.config.from_object("app.config.DevelopmentConfig")
 
 db = SQLAlchemy(app)
 
@@ -30,10 +32,10 @@ def home() -> Response:
 
     return Response(
         """
-        Hello! This is Flask \n
-
-        Using Bind Mount! \n
-
+        Hello! This is Flask 
+        <br>
+        Using Bind Mount!
+        <br>
         Visit Site At <a href="https://cyyang.me">cyyang.me</a>!
         """,
         status=200,

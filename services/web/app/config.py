@@ -1,23 +1,12 @@
-# with config, only values in uppercases are actually stored
-# import os
-# BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+# https://flask.palletsprojects.com/en/1.1.x/config/#development-production
+
+import os
 
 # base config class
 class Config(object):
-    DEBUG = True
-    TESTING = False
-    CSRF_ENABLED = True
-    SECRET_KEY = 'this-really-needs-to-be-changed'
-    WTF_CSRF_SECRET_KEY = "a csrf secret key"
-    SQLALCHEMY_DATABASE_URI = "postgresql://user:password@psqldb:5432/testdb"
+    # flask folders
+    STATIC_FOLDER = f"{os.getenv('APP_FOLDER', '.')}/app/static"
+
+    # database connections
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "postgresql://")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-class ProductionConfig(Config):
-    DEBUG = False
-
-class DevelopmentConfig(Config):
-    DEVELOPMENT = True
-    DEBUG = True
-
-class TestingConfig(Config):
-    TESTING = True
