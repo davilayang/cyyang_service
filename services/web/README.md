@@ -49,47 +49,72 @@
 + build image 
   + `docker image build --tag cyyang-flask .`
 + run container
-  + `docker container run -it --rm --publish 8000:5001 cyyang-flask /bin/ash`
-  + `docker container run --publish 8000:5001 cyyang-flask`
+  + `docker container run -it --rm --publish 8080:5001 cyyang-flask /bin/ash`
+  + `docker container run --publish 8080:5001 cyyang-flask`
 + remove image
   + `docker image rm cyyang-flask`
 
 ### Usage
 
-> communicate between web and database using _bridge: cyy-network_
+#### Containers in Single Network
 
-1. start database with network
-    + `docker container run --name psqldb --rm --network cyy-network -p 5432:5432 cyyang-db`
-2. start flask with network
-    + `docker container run -it --rm --network cyy-network cyyang-flask /bin/ash`
-      + `python manage.py reset_db`
+_Bridge network_  
 
-> bind mount for developing
-
-1. start database with network
+> url: postgresql://user:password@psqldb:5432/testdb
 
 ```bash
+# create network
+docker network create --driver bridge cyy_net
+docker network inspect cyy_net
+
+# start database container
+docker run --name psqldb --rm --network cyy_net -p 5432:5432 cyyang-db
+
+# start web container to test
+docker run -it --rm --network cyy_net cyyang-flask /bin/ash
+python manage.py reset_db
+
+# exec database to check
+docker exec -it psqldb /bin/ash
+## inside flask-dev container
+psql -U user testdb
+
+```
+
+#### Development with `Flask` and `Posgresql`
+
+_Start Containers_
+
+> http://localhost:8080
+
+```bash
+# start postgresql, with custom image
 docker container run --rm \
   --name psqldb \
   --network cyy-network \
   --publish 5432:5432 \
+  --volume psql-data:/var/lib/postgresql/data
   cyyang-db
-```
 
-2. start flask with network
-
-```bash
+# start flask, with custom image
+cd /d/AdminData/Documents/cyyang_service/
 docker container run --rm \
   --name flask-dev \
   --network cyy-network \
   --publish 8080:5001 \
   --mount type=bind,source="$(pwd)"/services/web,target=/usr/src \
   cyyang-flask
-```
-    + `--volume "$(pwd)"/services/web:/usr/src` 
 
-3. exec into flask-dev
+# --volume "$(pwd)"/services/web:/usr/src
+```
+
+_Exec into the containers_
 
 ```bash
+# postgresql
+docker exec -it psqldb /bin/ash
+
+# flask
 docker exec -it flask-dev /bin/ash
+
 ```
