@@ -57,7 +57,7 @@ psql -U user testdb
 
 ### Communicate with `bridge` network
 
-> postgresql://postgres:password@psqldb:5432/postgres
+> postgresql://postgres:\<password>@psqldb:5432/postgres
 
 ```bash
 docker network create --driver bridge cyy-network

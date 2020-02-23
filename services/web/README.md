@@ -60,7 +60,7 @@
 
 _Bridge network_  
 
-> url: postgresql://user:password@psqldb:5432/testdb
+> postgresql://\<user>:\<password>@psqldb:5432/\<database>
 
 ```bash
 # create network
@@ -95,7 +95,9 @@ docker container run --rm \
   --publish 5432:5432 \
   --volume psql-data:/var/lib/postgresql/data
   cyyang-db
+```
 
+```bash
 # start flask, with custom image
 cd /d/AdminData/Documents/cyyang_service/
 docker container run --rm \
@@ -104,7 +106,6 @@ docker container run --rm \
   --publish 8080:5001 \
   --mount type=bind,source="$(pwd)"/services/web,target=/usr/src \
   cyyang-flask
-
 # --volume "$(pwd)"/services/web:/usr/src
 ```
 
@@ -116,5 +117,4 @@ docker exec -it psqldb /bin/ash
 
 # flask
 docker exec -it flask-dev /bin/ash
-
 ```
