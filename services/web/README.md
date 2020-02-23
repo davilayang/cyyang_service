@@ -60,6 +60,36 @@
 
 1. start database with network
     + `docker container run --name psqldb --rm --network cyy-network -p 5432:5432 cyyang-db`
-2. start flask with network with _ash_
+2. start flask with network
     + `docker container run -it --rm --network cyy-network cyyang-flask /bin/ash`
       + `python manage.py reset_db`
+
+> bind mount for developing
+
+1. start database with network
+
+```bash
+docker container run --rm \
+  --name psqldb \
+  --network cyy-network \
+  --publish 5432:5432 \
+  cyyang-db
+```
+
+2. start flask with network
+
+```bash
+docker container run --rm \
+  --name flask-dev \
+  --network cyy-network \
+  --publish 8080:5001 \
+  --mount type=bind,source="$(pwd)"/services/web,target=/usr/src \
+  cyyang-flask
+```
+    + `--volume "$(pwd)"/services/web:/usr/src` 
+
+3. exec into flask-dev
+
+```bash
+docker exec -it flask-dev /bin/ash
+```

@@ -32,6 +32,8 @@ def home() -> Response:
         """
         Hello! This is Flask \n
 
+        Using Bind Mount! \n
+
         Visit Site At <a href="https://cyyang.me">cyyang.me</a>!
         """,
         status=200,
