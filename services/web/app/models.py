@@ -11,7 +11,7 @@ class Coursework(db.Model):
     category = db.Column(db.String(80))
     coursename = db.Column(db.String(255))
 
-    def __init__(self, category, courseName):
+    def __init__(self, category, coursename):
         self.category = category
         self.coursename = coursename
 
