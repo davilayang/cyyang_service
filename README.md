@@ -53,3 +53,6 @@
 + change `.env` variables accordingly
   + `DATABASE_URL=` ?
   + `APP_SETTINGS=` ?
+
+# Example Docstring
++ [Example Google Style Python Docstrings](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)

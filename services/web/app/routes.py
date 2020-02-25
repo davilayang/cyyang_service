@@ -15,7 +15,8 @@ from app.food_reviews.getRidgelineData import  getRidgeline
 from app.food_reviews.getStackedAreaData import getStackedArea
 # from app.food_reviews.getLollipopData import getLollipop
 from app.food_reviews.getGenSentsData import getGenSents
-from app.food_reviews.getGenSentsData import getAvailableWords
+# from app.food_reviews.getGenSentsData import getAvailableWords
+from app.food_reviews.sentence_generation import genereate_sentences
 from app.food_reviews.getHeatMapData import getHeatMap
 
 
@@ -39,9 +40,14 @@ def export_data_food_review_heatmap():
     
 # Trigrams Sentence Generation
 @app.route('/api/dSentGen', methods=['GET']) 
-def exportGenSents():
-    firstWord = request.args.get('first_word', '')
-    return getGenSents(firstWord)
+def export_generated_sentences():
+
+    zipPath = f"{app.static_folder}/data/helpful_reviews.zip"
+    fileName = 'helpful_reviews.json'
+
+    first_word = request.args.get('first_word', '')
+
+    return jsonify(genereate_sentences(zipPath, fileName, first_word))
 
 ## Lollipop Chart
 # @app.route('/api/dLollipop', methods=['GET']) 
