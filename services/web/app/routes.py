@@ -20,26 +20,8 @@ from app.food_reviews.getHeatMapData import getHeatMap
 
 from app.food_reviews.sentence_generation import genereate_sentences
 from apo.food_reviews.heatmap import prepare_heatmap
+from app.food_reviews.areachart import prepare_areachart
 
-
-# HeatMap Chart
-@app.route('/api/dHeatMap', methods=['GET']) 
-def exportData_food_review_heatmap():
-
-    """
-    export_data_food_review_heatmap
-
-    Function to export data for HeatMap, with selected start date and e-
-    nd date
-
-    """
-
-    start_date = request.args.get('start_date', '')
-
-    end_date = request.args.get('end_date', '')
-
-    return prepare_heatmap(start_date, end_date)
-    
 # Trigrams Sentence Generation
 @app.route('/api/dSentGen', methods=['GET']) 
 def exportData_generated_sentences():
@@ -50,6 +32,45 @@ def exportData_generated_sentences():
     first_word = request.args.get('first_word', '')
 
     return jsonify(genereate_sentences(zipPath, fileName, first_word))
+
+
+# HeatMap Chart
+@app.route('/api/dHeatMap', methods=['GET']) 
+def exportData_food_review_heatmap():
+
+    """
+    export_data_food_review_heatmap
+
+    Function to export data for HeatMap, with data period between start
+    date and end date
+
+    """
+
+    start_date = request.args.get('start_date', '')
+
+    end_date = request.args.get('end_date', '')
+
+    return prepare_heatmap(start_date, end_date)
+    
+
+## Stacked Area Chart
+@app.route('/api/dStackedArea', methods=['GET']) # served at /api/dStackedArea
+def exportData_areachart():
+
+    """
+    exportData_areachart
+
+    Fucntion to export data for stacked area chart, with data period be-
+    tween start date and end date
+
+    """
+
+    start_date = request.args.get('start_date', '')
+
+    end_date = request.args.get('end_date', '')
+
+    return prepare_areachart(start_date, end_date)
+
 
 ## Lollipop Chart
 # @app.route('/api/dLollipop', methods=['GET']) 
@@ -63,12 +84,6 @@ def exportRidgeline():
     end_date = request.args.get('end_date', '')
     return getRidgeline(start_date, end_date)
 
-## Stacked Area Chart
-@app.route('/api/dStackedArea', methods=['GET']) # served at /api/dStackedArea
-def exportStackedArea():
-    start_date = request.args.get('start_date', '')
-    end_date = request.args.get('end_date', '')
-    return getStackedArea(start_date, end_date)
 
 # Fetch coursework list
 @app.route('/api/courseworks', methods=['GET'])
