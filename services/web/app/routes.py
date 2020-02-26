@@ -16,13 +16,15 @@ from app.food_reviews.getStackedAreaData import getStackedArea
 # from app.food_reviews.getLollipopData import getLollipop
 from app.food_reviews.getGenSentsData import getGenSents
 # from app.food_reviews.getGenSentsData import getAvailableWords
-from app.food_reviews.sentence_generation import genereate_sentences
 from app.food_reviews.getHeatMapData import getHeatMap
+
+from app.food_reviews.sentence_generation import genereate_sentences
+from apo.food_reviews.heatmap import prepare_heatmap
 
 
 # HeatMap Chart
 @app.route('/api/dHeatMap', methods=['GET']) 
-def export_data_food_review_heatmap():
+def exportData_food_review_heatmap():
 
     """
     export_data_food_review_heatmap
@@ -36,11 +38,11 @@ def export_data_food_review_heatmap():
 
     end_date = request.args.get('end_date', '')
 
-    return getHeatMap(start_date, end_date)
+    return prepare_heatmap(start_date, end_date)
     
 # Trigrams Sentence Generation
 @app.route('/api/dSentGen', methods=['GET']) 
-def export_generated_sentences():
+def exportData_generated_sentences():
 
     zipPath = f"{app.static_folder}/data/helpful_reviews.zip"
     fileName = 'helpful_reviews.json'

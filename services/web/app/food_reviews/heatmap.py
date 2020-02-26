@@ -1,8 +1,7 @@
-# web/app/food_reviews/heatmap_time_of_review
+# web/app/food_reviews/heatmap.py
 
 from app.utilities import get_dataframe_from_db
-from json import dumps
-
+# from json import dumps
 
 def get_data(start_date, end_date):
 
@@ -40,7 +39,7 @@ def get_data(start_date, end_date):
     return data
 
 
-def heatmap_data(df)
+def prepare_heatmap(start_date, end_date)
 
     """
     heatmap_data
@@ -53,8 +52,9 @@ def heatmap_data(df)
 
     """
 
-    df.loc[:, 'review_times'] = (
-        df.groupby('customer_id')[['review_id']].transform('count')
+    df = (
+        get_data(start_date, end_date)
+        .assign(review_times=lambda d: d.groupby('customer_id')[['review_id']].transform('count'))
     )
 
     d = {}
