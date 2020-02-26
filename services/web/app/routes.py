@@ -11,16 +11,19 @@ from app.api import app
 # from app import app, db
 # from app.models import Coursework, SkillTree
 
-from app.food_reviews.getRidgelineData import  getRidgeline
-from app.food_reviews.getStackedAreaData import getStackedArea
+# from app.food_reviews.getRidgelineData import  getRidgeline
+# from app.food_reviews.getStackedAreaData import getStackedArea
 # from app.food_reviews.getLollipopData import getLollipop
-from app.food_reviews.getGenSentsData import getGenSents
+# from app.food_reviews.getGenSentsData import getGenSents
 # from app.food_reviews.getGenSentsData import getAvailableWords
-from app.food_reviews.getHeatMapData import getHeatMap
+# from app.food_reviews.getHeatMapData import getHeatMap
 
 from app.food_reviews.sentence_generation import genereate_sentences
 from apo.food_reviews.heatmap import prepare_heatmap
 from app.food_reviews.areachart import prepare_areachart
+# from app.food_reviews.lollipop import prepare_lollipop
+from app.food_reviews.ridgeline import prepare_ridgeline
+
 
 # Trigrams Sentence Generation
 @app.route('/api/dSentGen', methods=['GET']) 
@@ -79,10 +82,21 @@ def exportData_areachart():
 
 ## Ridgeline Chart
 @app.route('/api/dRidgeline', methods=['GET']) # served at /api/dRidgeline
-def exportRidgeline():
+def exportData_ridgeline():
+
+    """
+    exportData_ridgeline
+
+    Fucntion to export data for ridgeline chart, with data period betwe-
+    en start date and end date
+
+    """
+
     start_date = request.args.get('start_date', '')
+
     end_date = request.args.get('end_date', '')
-    return getRidgeline(start_date, end_date)
+
+    return prepare_ridgeline(start_date, end_date)
 
 
 # Fetch coursework list
