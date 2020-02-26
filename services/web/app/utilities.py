@@ -1,7 +1,13 @@
 # web/app/utilities.py
 
+# function imports
 from json import loads
 from zipfile import ZipFile
+from pandas import read_sql
+
+# import db instance
+from app.api import app, db
+
 
 
 def load_zip_data(zipPath, fileName):
@@ -23,3 +29,25 @@ def load_zip_data(zipPath, fileName):
         d = loads(zfile.read(fileName).decode("utf-8"))
 
     return d
+
+def get_dataframe_from_db(query):
+
+    """
+    get_dataframe_from_db
+
+    Function to read a SQL query and then retrieve data from PostgreSQL
+    database
+
+    Args: 
+        query (str): SQL query for retrieving data
+
+    Returns: 
+        dataframe (pandas DataFrame): contains the data retrieved with 
+        query
+
+    """
+
+    dataframe = read_sql(query, con=db.enine)
+
+    return dataframe
+
