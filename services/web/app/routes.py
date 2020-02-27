@@ -19,7 +19,7 @@ from app.api import app
 # from app.food_reviews.getHeatMapData import getHeatMap
 
 from app.food_reviews.sentence_generation import genereate_sentences
-from apo.food_reviews.heatmap import prepare_heatmap
+from app.food_reviews.heatmap import prepare_heatmap
 from app.food_reviews.areachart import prepare_areachart
 # from app.food_reviews.lollipop import prepare_lollipop
 from app.food_reviews.ridgeline import prepare_ridgeline

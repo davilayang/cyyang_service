@@ -39,7 +39,7 @@ def get_data(start_date, end_date):
     return data
 
 
-def prepare_heatmap(start_date, end_date)
+def prepare_heatmap(start_date, end_date):
 
     """
     heatmap_data
