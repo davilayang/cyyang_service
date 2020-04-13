@@ -1,0 +1,10 @@
+version: '3.7'
+
+services: 
+    flask:
+        build: ./services/flask
+
+    db:
+        build: ./services/db
+volumes:
+    psql_data:
