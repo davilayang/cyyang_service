@@ -1,14 +1,12 @@
 # web/app/utilities.py
 
+# import flask instances
+from app.api import app, db
+
 # function imports
 from json import loads
 from zipfile import ZipFile
 from pandas import read_sql
-
-# import db instance
-from app.api import app, db
-
-
 
 def load_zip_data(zipPath, fileName):
 
@@ -47,7 +45,7 @@ def get_dataframe_from_db(query):
 
     """
 
-    dataframe = read_sql(query, con=db.enine)
+    dataframe = read_sql(query, con=db.engine)
 
     return dataframe
 

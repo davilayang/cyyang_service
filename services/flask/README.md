@@ -1,14 +1,12 @@
 
-# `Flask` Servcice Structure
+# `cyyang.me` Services
 
-## Tree Map
+## Project Structure
 
 ```bash
 .
-├── CHANGELOG.md
 ├── Dockerfile
 ├── Pipfile
-├── Pipfile.lock
 ├── README.md
 ├── config
 │   ├── ...
@@ -23,26 +21,6 @@
     ├── __init__.py
     └── ...
 ```
-
-## Folders
-
-### config
-
-### k8s
-
-### app, as the main module
-
-+ `__init__.py`
-  + ...
-+ `api.py`
-  + basic routes and app
-+ `routes.py`
-  + chart routes
-+ `food_reviews`
-  + food reviews project data
-
-### `tests`
-
 
 ## Dockerfile
 
