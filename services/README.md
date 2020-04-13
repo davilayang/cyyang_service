@@ -2,10 +2,13 @@
 
 ## Development Setup
 
-start local containers with script:
-
 ```bash
-sh dev.script
+cd services/
+# start all containers
+sh dev.sh
+
+# stop all containers
+sh stop.sh
 ```
 
 ### Front-End
@@ -15,13 +18,19 @@ sh dev.script
 ### Back-End
 
 ```bash
-# on this bridge network
+# initialize bridge network
 docker network create --driver bridge cyy_net
 ```
 
 #### PostgreSQL Database
 
 ```bash
+# bulid image
+docker image build --tag cyyang-db ./db/
+```
+
+```bash
+# start container
 docker container run --rm \
   --name psqldb \
   --network cyy-network \
@@ -33,9 +42,15 @@ docker container run --rm \
 #### Flask Server
 
 ```bash
+# build image
+dokcer image build --tag cyyang-flask ./flask/
+```
+
+```bash
+# start container`
 cd /d/AdminData/Documents/cyyang_service/
 docker container run --rm \
-  --name flask-dev \
+  --name flaskdev \
   --network cyy-etwork \
   --publish 8080:5001 \
   --mount type=bind,source="$(pwd)"/services/web,target=/usr/src \
@@ -44,6 +59,8 @@ docker container run --rm \
 
 #### Nginx Server
 
+```bash
+```
 
 ## Deployment Setup
 
