@@ -22,13 +22,9 @@ RUN pip install -r requirements.txt
 # copy other files
 COPY . .
 
-# set flask env variables
+# set flask Enviroment Variables
 ENV FLASK_APP="./app/api.py"
 ENV FLASK_RUN_PORT=5001
-
-# env for docker container run
-ENV FLASK_ENV=development
-ENV DATABASE_URL=postgresql://user:password@psqldb:5432/testdb
 
 # start flask development server
 CMD ["flask", "run", "--host=0.0.0.0"]
