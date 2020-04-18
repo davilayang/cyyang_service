@@ -96,3 +96,14 @@ docker exec -it psqldb /bin/ash
 # flask
 docker exec -it flask-dev /bin/ash
 ```
+
+### Communicate with `bridge` network
+
+> postgresql://postgres:\<password>@psqldb:5432/postgres
+
+```bash
+docker network create --driver bridge cyy-network
+# docker network inspect cyy-network
+docker run --name some-psql --rm --network cyy-network -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:12.0-alpine
+docker run --name flask --rm --network cyy-network cyyang-flask
+```
