@@ -1,23 +1,24 @@
 #!/bin/bash
 
-echo "Start PostgreSQL container with bind volume"
+cd /d/AdminData/Documents/cyyang_service/
 
-docker container run --rm \
-  --name psqldb \
+echo "Start PostgreSQL container with persistent volume"
+
+docker container run --rm --detach \
   --network cyy-network \
-  --publish 5432:5432 \
-  --volume psql-data:/var/lib/postgresql/data \
-  --detach \
-  cyyang-db
+  --name dev-psql \
+  --env-file .env.dev \
+  -v psql-data:/var/lib/postgresql/data \
+  postgres:12.0-alpine
 
-echo "Start Flask container"
+echo "Start flask container with bind mount"
 
-docker container run --rm \
-  --name flaskdev \
+docker container run --rm --detach \
   --network cyy-network \
+  --name dev-flask \
   --publish 8080:5001 \
-  --mount type=bind,source=/d/AdminData/Documents/cyyang_service/services/web,target=/usr/src \
-  --detach \
+  --env-file .env.dev \
+  --mount type=bind,source="$(pwd)"/services/flask,target=/usr/src \
   cyyang-flask
 
 echo "Development Containers Started !"

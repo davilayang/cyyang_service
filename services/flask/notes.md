@@ -75,6 +75,8 @@ psql -U user testdb
 
 ## Development with `docker run`
 
+(or, `sh services/dev.sh`)
+
 Start Containers
 
 ```bash
