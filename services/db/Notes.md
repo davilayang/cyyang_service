@@ -68,6 +68,7 @@ psql -U postgres
 ### Communicate with `bridge` network
 
 > For the `flask` and `db` containers to talk to each other, they need to be one the same network, which is connected with _bridge network_.  
+> `postgresql://<user>:<password>@<conatiner-name>:5432/postgres`
 
 Create a `bridge` network
 
