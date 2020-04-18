@@ -111,3 +111,7 @@ docker exec -it dev-psql /bin/ash
 # flask
 docker exec -it dev-flask /bin/bash
 ```
+
+## References
+
++ [Gunicorn - WSGI server](https://docs.gunicorn.org/en/stable/)

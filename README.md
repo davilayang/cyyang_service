@@ -54,5 +54,11 @@
   + `DATABASE_URL=` ?
   + `APP_SETTINGS=` ?
 
+docker-compose -f docker-compose.prod.yml build
+docker-compose -f docker-compose.prod.yml up
+
+docker-compose build
+docker-compose up
+
 # Example Docstring
 + [Example Google Style Python Docstrings](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html)
