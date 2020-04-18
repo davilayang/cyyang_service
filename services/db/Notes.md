@@ -52,7 +52,7 @@ Start container with posgres alpine
 # detached
 docker container run \
   --rm --name some-psql -p 5432:5432 \
-  -e POSTGRES_PASSWORD=password \
+  -e POSTGRES_PASSWORD=<password> \
   -v psql-data:/var/lib/postgresql/data postgres:12.0-alpine
 ```
 

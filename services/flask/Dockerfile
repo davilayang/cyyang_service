@@ -24,7 +24,7 @@ COPY . .
 
 # set flask Enviroment Variables
 ENV FLASK_APP="./app/api.py"
-ENV FLASK_RUN_PORT=5001
+ENV FLASK_RUN_PORT="5001"
 
 # start flask development server
 CMD ["flask", "run", "--host=0.0.0.0"]

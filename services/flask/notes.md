@@ -1,109 +1,111 @@
 
-# `cyyang.me` Services
+# Flask Backend
 
-## Project Structure
+## Image/Dockerfile
+
+Build from Dockerfile
 
 ```bash
-.
-├── Dockerfile
-├── Pipfile
-├── README.md
-├── config
-│   ├── ...
-│   └── ...
-├── k8s
-├── mypy.ini
-├── app
-│   ├── __init__.py
-│   ├── api.py
-│   └── ...
-└── tests
-    ├── __init__.py
-    └── ...
+cd /d/AdminData/Documents/cyyang_service
+docker image build --tag cyyange-flask .
+```
+<!-- markdownlint-disable MD034 -->
+Start container  
+visits the root page at http://localhost:8080/  
+or `curl localhost:8080`
+<!-- markdownlint-ensable MD034 -->
+```bash
+docker container run --publish 8080:5001 cyyang-flask
+# interactive shell
+docker container run -it --rm -p 8080:5001 cyyang-flask /bin/bash
 ```
 
-## Dockerfile
-
-+ build image 
-  + `docker image build --tag cyyang-flask .`
-+ run container
-  + `docker container run -it --rm --publish 8080:5001 cyyang-flask /bin/ash`
-  + `docker container run --publish 8080:5001 cyyang-flask`
-+ remove image
-  + `docker image rm cyyang-flask`
-
-### Usage
-
-#### Containers in Single Network
-
-_Bridge network_  
-
-> postgresql://\<user>:\<password>@psqldb:5432/\<database>
+Remove images
 
 ```bash
-# create network
-docker network create --driver bridge cyy_net
-docker network inspect cyy_net
+docker image rm cyyang-flask
+# remove all unneeded
+docker image prune
+```
 
-# start database container
-docker run --name psqldb --rm --network cyy_net -p 5432:5432 cyyang-db
+## Communicate with `bridge` network
 
-# start web container to test
-docker run -it --rm --network cyy_net cyyang-flask /bin/ash
+> For the `flask` and `db` containers to talk to each other, they need to be one the same network, which is connected with _bridge network_.  
+
+Create a `bridge` network
+
+```bash
+docker network create --driver bridge cyy-network
+docker network inspect cyy-network
+```
+
+Start the containers by specifying `--network`
+
+```bash
+# db
+docker container run \
+  --rm --network cyy-network \
+  --name some-psql -p 5432:5432 \
+  -e POSTGRES_PASSWORD=password \
+  -v psql-data:/var/lib/postgresql/data postgres:12.0-alpine
+# flask
+# make sure .env.dev has the correct env, i.e. some-psql:5432
+docker container run \
+  --rm --network cyy-network \
+  --name some-flask --env-file .env.dev \
+  cyyang-flask
+```
+
+Exec into flask container and populate database
+
+```bash
+docker exec -it some-flask /bin/bash
+## inside the container
 python manage.py reset_db
+python manage.py seed_all
+```
 
-# exec database to check
-docker exec -it psqldb /bin/ash
-## inside flask-dev container
+Exec into database container
+
+```bash
+docker exec -it some-psql /bin/bash
+## within the container
 psql -U user testdb
-
 ```
 
-#### Development with `Flask` and `Posgresql`
+## Development with `docker run`
 
-_Start Containers_
-
-> http://localhost:8080
+Start Containers
 
 ```bash
-# start postgresql, with custom image
-docker container run --rm \
-  --name psqldb \
-  --network cyy-network \
-  --publish 5432:5432 \
-  --volume psql-data:/var/lib/postgresql/data
-  cyyang-db
-```
-
-```bash
-# start flask, with custom image
+# load .env file at project root
 cd /d/AdminData/Documents/cyyang_service/
+```
+
+```bash
+# start postgresql with persistent volume
+docker container run \
+  --network cyy-network --name dev-psql \
+  --env-file .env.dev \
+  -v psql-data:/var/lib/postgresql/data \
+  postgres:12.0-alpine
+```
+
+```bash
+# start flask with bind mount
 docker container run --rm \
-  --name flask-dev \
-  --network cyy-network \
-  --publish 8080:5001 \
-  --mount type=bind,source="$(pwd)"/services/web,target=/usr/src \
+  --network cyy-network --name dev-flask \
+  --publish 8080:5001 --env-file .env.dev \
+  --mount type=bind,source="$(pwd)"/services/flask,target=/usr/src \
   cyyang-flask
 # --volume "$(pwd)"/services/web:/usr/src
 ```
 
-_Exec into the containers_
+Exec into the containers
 
 ```bash
-# postgresql
-docker exec -it psqldb /bin/ash
-
+# postgres
+docker exec -it dev-psql /bin/ash
 # flask
-docker exec -it flask-dev /bin/ash
-```
-
-### Communicate with `bridge` network
-
-> postgresql://postgres:\<password>@psqldb:5432/postgres
-
-```bash
-docker network create --driver bridge cyy-network
-# docker network inspect cyy-network
-docker run --name some-psql --rm --network cyy-network -p 5432:5432 -e POSTGRES_PASSWORD=password postgres:12.0-alpine
-docker run --name flask --rm --network cyy-network cyyang-flask
+docker exec -it dev-flask /bin/bash
 ```
