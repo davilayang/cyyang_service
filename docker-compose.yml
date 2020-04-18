@@ -2,8 +2,8 @@ version: '3.7'
 
 services: 
   flask:
-    # build: ./services/flask
-    image: cyyang-flask:latest
+    build: ./services/flask
+    # image: cyyang-flask:latest
     # command: [ash, -c, "python manage.py reset_db && python manage.py seed_all && flask run --host=0.0.0.0"]
     volumes: 
       - ./services/flask:/usr/src/  # bind mounting folder for development
