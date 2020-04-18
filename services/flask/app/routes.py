@@ -33,7 +33,8 @@ def exportData_generated_sentences():
     fileName = 'helpful_reviews.json'
 
     first_word = request.args.get('first_word', '')
-
+    # TODO: write a check if empty string is passed
+    
     return jsonify(genereate_sentences(zipPath, fileName, first_word))
 
 

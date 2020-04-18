@@ -1,10 +1,22 @@
 version: '3.7'
 
 services: 
-    flask:
-        build: ./services/flask
+  flask:
+    # build: ./services/flask
+    image: cyyang-flask:latest
+    # command: [ash, -c, "python manage.py reset_db && python manage.py seed_all && flask run --host=0.0.0.0"]
+    volumes: 
+      - ./services/flask:/usr/src/  # bind mounting folder for development
+    ports: 
+      - 8080:5001 # export container 5001 port to localhost:8080
+    # env_file:
+    #  - ./.env.dev
+    depends_on: 
+      - psqldb
 
-    db:
-        build: ./services/db
+  psqldb:
+    build: ./services/db
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data # persistent volume for development
 volumes:
-    psql_data:
+  postgres_data:

@@ -11,11 +11,11 @@ sh dev.sh
 sh stop.sh
 ```
 
-### Front-End
+### Front-End Services
 
 > skip for now, add into project later
 
-### Back-End
+### Back-End Services
 
 ```bash
 # initialize bridge network
@@ -25,12 +25,12 @@ docker network create --driver bridge cyy_net
 #### PostgreSQL Database
 
 ```bash
-# bulid image
+# bulid image with ./db/Dockerfile
 docker image build --tag cyyang-db ./db/
 ```
 
 ```bash
-# start container
+# start container with persistent volume, psql-data
 docker container run --rm \
   --name psqldb \
   --network cyy-network \
@@ -42,12 +42,12 @@ docker container run --rm \
 #### Flask Server
 
 ```bash
-# build image
+# build image with ./flask/Dockerfile
 dokcer image build --tag cyyang-flask ./flask/
 ```
 
 ```bash
-# start container`
+# start container with bind mount
 cd /d/AdminData/Documents/cyyang_service/
 docker container run --rm \
   --name flaskdev \
@@ -58,6 +58,9 @@ docker container run --rm \
 ```
 
 #### Nginx Server
+
+```bash
+```
 
 ```bash
 ```
@@ -74,3 +77,4 @@ docker container run --rm \
 + [Dockerize a Flask App](https://dev.to/riverfount/dockerize-a-flask-app-17ag)
 + [Setting Up Docker for Windows and WSL to Work Flawlessly](https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly)
 + [Deploy React Application to Kubernetes Cluster on Google Cloud Platform](https://hackernoon.com/deploy-a-react-application-to-kubernetes-cluster-on-google-cloud-platform-3idt32ha)
++ [How to Configure NGINX for a Flask Web Application](https://www.patricksoftwareblog.com/how-to-configure-nginx-for-a-flask-web-application/)
