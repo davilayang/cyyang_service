@@ -1,68 +1,73 @@
 # Portfolio Services
 
-## Development Setup
+## Development Instruction
 
 ```bash
-cd services/
-# start all containers
-sh dev.sh
-
-# stop all containers
-sh stop.sh
+# start all development containers
+sh services/dev.sh
+# stop all development containers
+sh services/stop.sh
 ```
 
-### Front-End Services
+### FrontEnd
 
 > skip for now, add into project later
 
-### Back-End Services
+### BackEnd
 
 ```bash
+cd /d/AdminData/Documents/cyyang_service/
+
 # initialize bridge network
-docker network create --driver bridge cyy_net
+docker network create --driver bridge cyy-network
+docker network inspect cyy-network
 ```
 
 #### PostgreSQL Database
 
 ```bash
-# bulid image with ./db/Dockerfile
-docker image build --tag cyyang-db ./db/
-```
-
-```bash
 # start container with persistent volume, psql-data
 docker container run --rm \
-  --name psqldb \
   --network cyy-network \
-  --publish 5432:5432 \
-  --volume psql-data:/var/lib/postgresql/data
-  cyyang-db
+  --name dev-psql \
+  --env-file .env.dev \
+  -v psql-data:/var/lib/postgresql/data \
+  postgres:12.0-alpine
 ```
 
 #### Flask Server
 
 ```bash
 # build image with ./flask/Dockerfile
-dokcer image build --tag cyyang-flask ./flask/
+docker image build --tag cyyang-flask ./services/flask/
 ```
 
 ```bash
 # start container with bind mount
-cd /d/AdminData/Documents/cyyang_service/
 docker container run --rm \
-  --name flaskdev \
-  --network cyy-etwork \
+  --network cyy-network \
+  --name dev-flask \
   --publish 8080:5001 \
-  --mount type=bind,source="$(pwd)"/services/web,target=/usr/src \
+  --env-file .env.dev \
+  --mount type=bind,source="$(pwd)"/services/flask,target=/usr/src \
   cyyang-flask
 ```
 
 #### Nginx Server
 
 ```bash
+# build image with ./nginx/Dockerfile
+docker image build --tag cyyang-nginx ./services/nginx/
 ```
 
 ```bash
+# start container
+docker container run --rm \
+  --network cyy-network \
+  --name dev-nginx \
+  --publish 1337:80 \
+  cyyang-nginx
+# change the upstream to: server ddv-flask:5001
 ```
 
 ## Deployment Setup
