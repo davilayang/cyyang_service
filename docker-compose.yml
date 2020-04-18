@@ -3,7 +3,6 @@ version: '3.7'
 services: 
   flask:
     build: ./services/flask
-    # image: cyyang-flask:latest
     # command: [sh, -c, "python manage.py reset_db && python manage.py seed_all && flask run --host=0.0.0.0"]
     command: [sh, -c, "flask run --host=0.0.0.0"]
     volumes: 
@@ -19,5 +18,7 @@ services:
     build: ./services/db
     volumes: 
       - postgres_data:/var/lib/postgresql/data # persistent volume for development
+    env_file:
+      - ./.env.dev
 volumes:
   postgres_data:
