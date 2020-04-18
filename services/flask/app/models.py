@@ -1,4 +1,5 @@
-# database models/tables
+# app/models.py
+# database models
 
 from app.api import app, db
 

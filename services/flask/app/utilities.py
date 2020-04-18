@@ -1,4 +1,4 @@
-# web/app/utilities.py
+# app/utilities.py
 
 # import flask instances
 from app.api import app, db

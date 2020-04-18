@@ -1,4 +1,4 @@
-# custom routes for api
+# app/routes.py
 
 from flask import (
     Response, 
@@ -8,15 +8,6 @@ from flask import (
 from flask_sqlalchemy import SQLAlchemy
 
 from app.api import app
-# from app import app, db
-# from app.models import Coursework, SkillTree
-
-# from app.food_reviews.getRidgelineData import  getRidgeline
-# from app.food_reviews.getStackedAreaData import getStackedArea
-# from app.food_reviews.getLollipopData import getLollipop
-# from app.food_reviews.getGenSentsData import getGenSents
-# from app.food_reviews.getGenSentsData import getAvailableWords
-# from app.food_reviews.getHeatMapData import getHeatMap
 
 from app.food_reviews.sentence_generation import genereate_sentences
 from app.food_reviews.heatmap import prepare_heatmap
