@@ -15,7 +15,10 @@ services:
       - psqldb
 
   psqldb:
-    build: ./services/db
+    # build: ./services/db
+    image: postgres:12.0-alpine
+    ports: 
+      - 5432:5432
     volumes: 
       - postgres_data:/var/lib/postgresql/data # persistent volume for development
     env_file:
